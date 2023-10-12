@@ -2,12 +2,11 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden;
     scroll-behavior: smooth;
     background-color: #f0f0f0;
 }
 .container {
-    max-width: 800px; 
+    max-width: 950px; 
     margin: 0 auto; 
     padding: 20px; 
     background-color: #fff; 
@@ -43,4 +42,8 @@ nav a:hover {
 section {
     padding: 60px 0;
     text-align: center;
+}
+::-webkit-scrollbar {
+    width: 12px; 
+    background-color: transparent; 
 }
