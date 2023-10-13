@@ -11,17 +11,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//Fetching data from my chosen API (Fireball Data) 
-function fetchFireballData() {
-    const apiUrl = 'https://ssd-api.jpl.nasa.gov/fireball.api';
-    return fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => data.data); 
-  }
-
+// Callback function
+function handleFireballData(data) {
+    const fireballs = data.data;
   
+    // Stores extracted data
+    const extractedData = [];
+  
+    // Cycle through the fireballs
+    for (const fireball of fireballs) {
+      // Extract information
+      const entry = {
+        time: fireball.date,
+        location: fireball.lat + ', ' + fireball.lon,
+        velocity: fireball.vel
+      };
+      extractedData.push(entry);
+    }
+  
+    console.log(extractedData);
+  }
+  
+  
+  const apiUrl = 'https://ssd-api.jpl.nasa.gov/fireball.api';
+  const apiKey = 'vYNdXV5Izq9bsvPHLE38SqN5wqcho9fW4uisathz';
+  const limit = 10; // Number of fireballs to retrieve
+  const script = document.createElement('script');
+  script.src = `${apiUrl}?limit=${limit}&api_key=${apiKey}&callback=handleFireballData`;
+  
+  
+  document.body.appendChild(script);
