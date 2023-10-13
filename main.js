@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+/*
 // Callback function
 function handleFireballData(data) {
     const fireballs = data.data;
@@ -41,3 +42,4 @@ function handleFireballData(data) {
   
   
   document.body.appendChild(script);
+*/
