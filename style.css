@@ -3,9 +3,11 @@ html {
 }
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('images/bg-4.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
-
 .container {
     max-width: 950px; 
     margin: 100px auto; 
