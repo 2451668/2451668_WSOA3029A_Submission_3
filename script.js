@@ -10,3 +10,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+//Fetching data from my chosen API (Fireball Data) 
+function fetchFireballData() {
+    const apiUrl = 'https://ssd-api.jpl.nasa.gov/fireball.api';
+    return fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => data.data); 
+  }
+
+  
