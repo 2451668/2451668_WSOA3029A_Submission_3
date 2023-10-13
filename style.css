@@ -1,54 +1,71 @@
+/* Global */
 html {
     scroll-behavior: smooth;
 }
+
 body {
     font-family: 'Poppins', sans-serif;
-    background-image: url('images/bg-4.webp');
+    background-image: url('images/bg-2.webp');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+/* Container styling */
 .container {
-    max-width: 950px; 
-    margin: 100px auto; 
-    padding: 20px 0px; 
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 20px 0px;
+    background-color: rgb(19, 19, 19);
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.397);
 }
+
+/* Main styling */
+main {
+    background: linear-gradient(to bottom, #fdf7f1, #f3f9ff);
+}
+
 main h1, main p {
     text-align: left;
     margin-left: 100px;
     margin-right: 100px;
+    color: #181818;
 }
+
+/* Header and Navbar styling */
 .header {
     position: sticky;
     top: 0;
     text-align: right;
-    padding: 10px 0;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.062);
-    background-color: rgb(255, 255, 255);
+    padding: 4px 0;
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.062);
+    background-color: rgb(19, 19, 19);
     z-index: 1;
 }
+
 /* Styling for the header when scrolled */
 .header.scrolled {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.048); 
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.048);
 }
+
 nav {
     width: 100%;
 }
+
 nav ul {
     list-style: none;
     text-align: right;
 }
+
 nav li {
     display: inline-block;
     padding: 0 20px;
     position: relative;
 }
+
 nav a {
-    color: rgb(0, 0, 0);
+    color: #ffffff;
     text-decoration: none;
     padding: 0 10px;
     font-size: 17px;
@@ -56,26 +73,30 @@ nav a {
     position: relative;
     transition: color 0.3s ease;
 }
+
 /* Hover animation for the links */
 nav a:hover {
-    color: #007BFF; /* Color when hovering over the link */
+    color: hsl(212, 100%, 68%); /
 }
 
+/* Section styling */
 section {
     padding: 60px 0;
     text-align: center;
 }
+
+/* Footer styling */
 footer {
-    text-align: center; 
+    text-align: center;
     padding: 10px;
-    background-color: #ffffff; 
-    border-top: 1px solid #b9b9b9; 
-    color: #555; 
-    font-size: 14px; 
-    
+    background-color: rgb(19, 19, 19);
+    border-top: 1px solid #b9b9b9;
+    color: #ffffff;
+    font-size: 14px;
 }
-/* toggling the scrollbar */
+
+/* Toggling the scrollbar */
 ::-webkit-scrollbar {
-    width: 12px; 
-    background-color: transparent; 
+    width: 0px;
+    background-color: transparent;
 }
