@@ -21,12 +21,12 @@ const data = [
     { velocity: 11.9, energy: 3.7 }
 ];
 
-// Scatterplot configuration
+// Scatterplot
 const margin = { top: 80, right: 30, bottom: 80, left: 80 };
 const width = 800 - margin.left - margin.right;
 const height = 800 - margin.top - margin.bottom; // Adjusted height
 
-// Create SVG container
+// SVG container for html
 const svg = d3.select('.scatterplot-container')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
@@ -34,7 +34,7 @@ const svg = d3.select('.scatterplot-container')
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
-const customMaxX = 12; // Replace with your desired maximum for the x-axis
+const customMaxX = 12; // custom maximum for the x-axis
 const customMaxY = 250;
 // Scales
 const xScale = d3.scaleLinear()
@@ -55,7 +55,7 @@ function make_y_gridlines() {
     return d3.axisLeft(yScale).ticks(5);
 }
 
-// Append x gridlines to the scatterplot
+// x gridlines 
 svg.append('g')
     .attr('class', 'grid')
     .attr('transform', `translate(0, ${height})`)
@@ -63,7 +63,7 @@ svg.append('g')
         .tickSize(-height)
         .tickFormat(''));
 
-// Append y gridlines to the scatterplot
+// y gridlines 
 svg.append('g')
     .attr('class', 'grid')
     .call(make_y_gridlines()
@@ -92,19 +92,33 @@ svg.append('g')
 svg.append('g')
     .attr('class', 'y-axis') 
     .call(yAxis);
+//Global font
+
 
 // Axis labels
 svg.append('text')
     .attr('class', 'x-axis-label')
     .attr('x', width / 2)
-    .attr('y', height + margin.top + 20)
+    .attr('y', height + margin.top -20)
+    .style('font-family', 'Poppins, sans-serif')
+    .style('font-weight', 'bold')
     .text('Velocity');
 
-    svg.append('text')
+svg.append('text')
     .attr('class', 'y-axis-label')
-    .attr('transform', 'rotate(-90)') 
+    .attr('transform', 'rotate(-90)')
     .attr('x', -height / 2)
     .attr('y', -60)
     .attr('dy', '1em')
+    .style('font-family', 'Poppins, sans-serif')
+    .style('font-weight', 'bold')
     .style('text-anchor', 'middle')
     .text('Energy');
+
+svg.append('text')
+    .attr('x', width / 3)
+    .attr('y', -40)
+    .style('font-family', 'Poppins, sans-serif')
+    .style('font-weight', 'bold')
+    .style('font-size', '20px')
+    .text('Fireball Velocity vs Energy');

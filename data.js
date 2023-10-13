@@ -1,4 +1,4 @@
-// Data from the list of 20 fastest fireballs
+// Fetched Data from the list of the 20 fastest fireballs recorded
 const fireballsData = {
     signature: {
       source: "NASA/JPL Fireball Data API",
@@ -237,6 +237,6 @@ const fireballsData = {
         "30.6",
         "11.9"
     ]
-      // ... (add the rest of the data here)
+    
     ]
   };
