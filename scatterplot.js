@@ -22,9 +22,9 @@ const data = [
 ];
 
 // Scatterplot configuration
-const margin = { top: 30, right: 30, bottom: 50, left: 60 };
+const margin = { top: 80, right: 30, bottom: 80, left: 80 };
 const width = 800 - margin.left - margin.right;
-const height = 600 - margin.top - margin.bottom; // Adjusted height
+const height = 800 - margin.top - margin.bottom; // Adjusted height
 
 // Create SVG container
 const svg = d3.select('.scatterplot-container')
@@ -38,7 +38,7 @@ const customMaxX = 12; // Replace with your desired maximum for the x-axis
 const customMaxY = 250;
 // Scales
 const xScale = d3.scaleLinear()
-    .domain([10.8, customMaxX]) // custom maximum for the x-axis
+    .domain([9.5, customMaxX]) // custom maximum for the x-axis
     .range([0, width]);
 
 const yScale = d3.scaleLinear()
@@ -77,7 +77,7 @@ svg.selectAll('circle')
     .append('circle')
     .attr('cx', d => xScale(d.velocity))
     .attr('cy', d => yScale(d.energy))
-    .attr('r', 6)
+    .attr('r', 5)
     .attr('fill', 'steelblue');
 
 // Axes
@@ -100,9 +100,11 @@ svg.append('text')
     .attr('y', height + margin.top + 20)
     .text('Velocity');
 
-svg.append('text')
+    svg.append('text')
     .attr('class', 'y-axis-label')
-    .attr('transform', 'rotate(-90)')
+    .attr('transform', 'rotate(-90)') 
     .attr('x', -height / 2)
-    .attr('y', -margin.left)
+    .attr('y', -60)
+    .attr('dy', '1em')
+    .style('text-anchor', 'middle')
     .text('Energy');
