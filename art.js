@@ -28,7 +28,7 @@ const width = 800 - margin.left - margin.right;
 const height = 800 - margin.top - margin.bottom; // Adjusted height
 
 // SVG container for html
-const svg = d3.select('.scatterplot-container')
+const svg = d3.select('.scatterplotart-container')
     .append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
@@ -48,9 +48,9 @@ const yScale = d3.scaleLinear()
 
 
 const colorScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.energy)])
+    .domain([0, d3.max(data, d => d.energy)]) // Adjust the domain according to your data
     .range(['steelblue', 'cyan']);
-const tooltip = d3.select(".tooltip");
+
     // Gridlines for the x-axis
 function make_x_gridlines() {
     return d3.axisBottom(xScale).ticks(5);
@@ -84,36 +84,38 @@ svg.selectAll('circle')
     .attr('cx', d => xScale(d.velocity))
     .attr('cy', d => yScale(0))
     .attr('r', 6)
-    .attr('fill', 'steelblue')
-    .attr('opacity', 0.7)
+    .attr('fill', 'steelblue') // Set initial color as blue
+    
     .transition()
-    .duration(2000)
-    .delay((d, i) => i * 100)
+    .duration(2000) // Animation duration
+    .delay((d, i) => i * 100) // Staggered delay for the animation
     .attr('cy', d => yScale(d.energy))
     .attrTween('fill', function(d) {
-        const i = d3.interpolateRgb('steelblue', colorScale(d.energy));
+        const i = d3.interpolateRgb('steelblue', colorScale(d.energy)); // Interpolate colors
         return function(t) {
             return i(t);
         };
     })
+    // Event listeners for the tooltip
     /*.on("mouseover", function(event, d) {
-        // Show tooltip on mouseover
+        // Define the tooltip
         const tooltip = d3.select('.tooltip');
         tooltip.transition().duration(200).style('opacity', 0.9);
         tooltip.html(`<strong>Date:</strong> ${d.date}<br>
                       <strong>Location:</strong> ${d.location}<br>
                       <strong>Energy:</strong> ${d.energy}<br>
                       <strong>Velocity:</strong> ${d.velocity}`);
+        
         tooltip.style('left', (event.pageX) + 'px')
-               .style('top', (event.pageY - 28) + 'px');
-        d3.select(this).attr('fill', 'red'); // Change dot color on hover
+            .style('top', (event.pageY - 28) + 'px');
+        
+        d3.select(this).attr('fill', 'red'); // Visual indication for the hovered dot
     })
     .on("mouseout", function() {
-        // Hide  tooltip on mouseout
+        // Hide the tooltip and reset the dot color
         d3.select('.tooltip').transition().duration(500).style('opacity', 0);
         d3.select(this).attr('fill', 'steelblue');
     })*/;
-
 
 // Axes
 const xAxis = d3.axisBottom(xScale);

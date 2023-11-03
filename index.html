@@ -27,23 +27,42 @@
 
         <main>
             <section id="home">
-                <h1>Data Art and Visualisation</h1>
-                <p>This will be a website talking about fireballs and Bolides as per the data reported by US Government sensors.   </p>
+                <h1>Fireballs and bolides</h1>
+                <p>This will be a website talking about fireballs and bolides as per the data collected from NASA's Fireball Data API</p>
+                <p></p>
+                <img src = "images/fireball-1.jpeg" alt = "example of a comet">
+                <p></p>
+                <p>A comet is a celestial object composed primarily of ice, dust, rock, and various organic compounds that orbits the Sun. When comets are far from the Sun, they exist as frozen, dormant objects. However, as they approach the Sun in their elliptical orbits, they begin to heat up, causing the ice within them to vaporize. This process releases gases and dust, forming a glowing coma, or cloud, around the comet's nucleus</p>
+                <p>The solar wind and radiation pressure from the Sun push some of this material away from the coma, forming the characteristic tail or tails that point away from the Sun. Comets typically have two types of tails: a dust tail, which is a yellowish or white trail of tiny solid particles, and an ion tail, which appears bluish and is made up of gases that have been ionized by the Sun's ultraviolet radiation.</p>
+
+                <P>Comets have been observed and studied for centuries, and they are believed to be remnants from the early formation of the solar system, containing important information about its history and composition. As they travel through the inner solar system, they can be visible from Earth and have fascinated people for generations.</P>
+
                 
             </section>
             
             <section id="vis">
-                <h1>Visual</h1>
-                <p>Visual for a chart comparing the relationship between energy and velocity of the 20 fastest fireballs recorded so far.</p>
+                <h1>Fireball Scatterplot</h1>
+                <p>Overall, a comet's speed is primarily dictated by the balance between the gravitational force from the Sun and the comet's velocity as it traverses its orbit around the Sun. The speed of a comet can change throughout its journey as it gets closer to or moves away from the Sun.</p>
+                <p>Below is visual for a chart comparing the relationship between energy and velocity of the 20 fastest recorded so far (you may need to reload the page at this point to see the animation, if they did not play on scroll).
+                </p>
             </section>
             
             <div class="scatterplot-container"></div>
 
+            <div class="tooltip" style="opacity: 0;">
+                <div><strong>Date:</strong> <span class="date"></span></div>
+                <div><strong>Location:</strong> <span class="location"></span></div>
+                <div><strong>Energy:</strong> <span class="energy"></span></div>
+                <div><strong>Velocity:</strong> <span class="velocity"></span></div>
+            </div>
+            
+            <p> Though there is a common trend of stable or uniform comets for most of them, the two outliers are a particularly slow and tired comet near the y axis, and a very energentic one alone at the top. Strangley, whilst being by far the most energentic, it was not the fastest that's been recorded, though is among the top-10 nonetheless. </p>
 
             <section id="art">
                 <h1>Art</h1>
                 <p>This portion of the site will be dedicated for the data art section once that segment has been completed.</p>
-                <img src="images/gif_1.gif" alt="gif showcasing the top pet searches in the US">
+                <div class="scatterplotart-container"></div>
+                
             </section>
 
             <section id="blog">
@@ -323,6 +342,7 @@
     <script src="main.js"></script>
     <script src="data.js"></script>
     <script src="scatterplot.js"></script>
+    <script src="art.js"></script>
 
 </body>
 </html>

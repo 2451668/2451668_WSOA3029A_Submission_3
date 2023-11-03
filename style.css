@@ -23,7 +23,7 @@ body {
 
 /* Main styling */
 main {
-    background: linear-gradient(to bottom, #fdf7f1, #f3f9ff);
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
 }
 
 main h1, main h2, main p {
@@ -32,6 +32,12 @@ main h1, main h2, main p {
     margin-right: 100px;
     color: #181818;
     padding: 5px;
+}
+
+main img {
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Header and Navbar styling */
@@ -108,4 +114,32 @@ footer {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.scatterplotart-container {
+    width: 78%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+/* Tooltip container */
+.tooltip {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Styling for different sections of the tooltip */
+.tooltip .date,
+.tooltip .location,
+.tooltip .energy,
+.tooltip .velocity {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
