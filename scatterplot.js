@@ -63,15 +63,15 @@ scatterSvg
   .attr('fill', 'steelblue')
   .attr('opacity', 0.7)
   .on('mouseover', function () {
-    // Make the circle glow and increase opacity on hover
+    // glow and increase opacity on hover
     d3.select(this)
       .transition()
       .duration(300)
-      .attr('fill', 'cyan') // Adjust the glow color as needed
-      .attr('opacity', 1.0); // Full opacity on hover
+      .attr('fill', 'cyan')
+      .attr('opacity', 1.0); 
   })
   .on('mouseout', function () {
-    // Restore the original color and opacity on mouseout
+    // restores the original color and opacity on mouseout
     d3.select(this)
       .transition()
       .duration(300)
