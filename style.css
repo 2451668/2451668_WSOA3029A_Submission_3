@@ -6,9 +6,10 @@ html {
 body {
     font-family: 'Poppins', sans-serif;
     background-image: url('images/bg-2.webp');
-    background-size: cover;
+    background-size: 110%;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    
 }
 
 /* Container styling */
@@ -23,14 +24,22 @@ body {
 
 /* Main styling */
 main {
-    background: linear-gradient(to bottom, #ffffff, #ffffff);
+    background: linear-gradient(to bottom, #1a1a1a, #1a1a1a);
 }
 
-main h1, main h2, main p {
+main h2, main p {
     text-align: left;
     margin-left: 100px;
     margin-right: 100px;
-    color: #181818;
+    color: #ffffff;
+    padding: 5px;
+}
+
+main h1{
+    text-align: left;
+    margin-left: 100px;
+    margin-right: 100px;
+    color: #ffffff;
     padding: 5px;
 }
 
@@ -111,7 +120,7 @@ footer {
     width: 78%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #c1c6c9;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }

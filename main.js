@@ -43,3 +43,13 @@ function handleFireballData(data) {
   
   document.body.appendChild(script);
 
+  document.addEventListener('mousemove', (e) => {
+    // Calculate the new background position
+    const xPos = -e.clientX / 25;  // Adjust the divisor for slower/faster horizontal movement
+    const yPos = -e.clientY / 25;  // Adjust the divisor for slower/faster vertical movement
+
+    // Apply the new background position
+    document.body.style.backgroundPosition = `${xPos}px ${yPos}px`;
+});
+
+
