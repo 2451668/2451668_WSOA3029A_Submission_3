@@ -186,3 +186,25 @@ footer {
     stroke: steelblue;
     stroke-width: 2;
 }
+
+/*heatmap styling*/
+.heatmap-container {
+    /*width: 78%;
+    margin: 20px auto;
+    background-color: #c1c6c9;    
+    background-size: 200% 200%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);*/
+}
+
+/*radial chart styling*/
+.radial-chart-container {
+    width: 78%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    background-color: #141414;    
+    background-size: 200% 200%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+

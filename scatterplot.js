@@ -117,6 +117,7 @@ scatterSvg.append('text')
     .text('Fireball Velocity vs Energy');
 
 
+
 // . . . bar plot
 
 // dimensions and margins
@@ -213,8 +214,8 @@ barChartSvg.append('text')
     .text('Fireball Frequency in Different Locations');
 
 
-// . . . line plot
 
+// . . . line plot
 const lineMargin = { top: 80, right: 30, bottom: 80, left: 80 };
 const lineWidth = 800 - lineMargin.left - lineMargin.right;
 const lineHeight = 400 - lineMargin.top - lineMargin.bottom;
@@ -286,3 +287,164 @@ lineSvg.append('text')
   .style('font-weight', 'bold')
   .style('font-size', '20px')
   .text('Fireball Velocity vs Energy');
+
+  
+
+// . . . heatmap
+
+// fireball energies
+const fireballEnergies = [
+    36, 50, 70, 80, 60, 46, 104, 28, 66, 38,
+    50, 36, 170, 41, 41, 58, 36, 64, 99, 37
+];
+
+// dimensions and margins
+const heatmapMargin = { top: 20, right: 80, bottom: 60, left: 80 };
+const blockWidth = 180;
+const blockHeight = 180;
+const gridWidth = 5;
+
+// dimensions for the heatmap
+const heatmapWidth = gridWidth * blockWidth + heatmapMargin.left + heatmapMargin.right;
+const heatmapHeight = Math.ceil(fireballEnergies.length / gridWidth) * blockHeight + heatmapMargin.top + heatmapMargin.bottom;
+
+// svg for the heatmap
+const heatmapSvg = d3.select('.heatmap-container')
+    .append('svg')
+    .attr('width', heatmapWidth)
+    .attr('height', heatmapHeight)
+    .append('g')
+    .attr('transform', `translate(${heatmapMargin.left}, ${heatmapMargin.top})`);
+
+// color scale for intensity
+const heatmapColorScale = d3.scaleLinear()
+    .domain([0, d3.max(fireballEnergies)])
+    .range(['#ff6600', '#FFA500']);
+
+// heatmap 
+const heatmapGroup = heatmapSvg.append('g')
+    .attr('transform', `translate(${heatmapMargin.left}, ${heatmapMargin.top})`)
+    .append('rect')
+    .attr('width', heatmapWidth - heatmapMargin.left - heatmapMargin.right)
+    .attr('height', heatmapHeight - heatmapMargin.top - heatmapMargin.bottom)
+    .attr('rx', 15) 
+    .attr('ry', 15) 
+    .style('fill', 'none');
+
+// blocks for the heatmap
+heatmapSvg.selectAll('rect.block')
+    .data(fireballEnergies)
+    .enter()
+    .append('rect')
+    .classed('block', true)
+    .attr('x', (d, i) => (i % gridWidth) * blockWidth)
+    .attr('y', (d, i) => Math.floor(i / gridWidth) * blockHeight)
+    .attr('width', blockWidth)
+    .attr('height', blockHeight)
+    .attr('fill', d => heatmapColorScale(d))
+    .attr('rx', 10) 
+    .attr('ry', 10) 
+    .on('mouseover', function () {
+        // make block slightly lighter on hover
+        const currentColor = d3.select(this).attr('fill');
+        const lighterColor = d3.color(currentColor).brighter(0.2).toString();
+        d3.select(this).attr('fill', lighterColor);
+    })
+    .on('mouseout', function (event, d) {
+        // restore
+        d3.select(this).attr('fill', heatmapColorScale(d));
+    });
+
+
+
+// . . . radial chart
+
+const radialChartData = [
+    36, 50, 70, 80, 60, 46, 104, 28, 66, 38,
+    50, 36, 170, 41, 41, 58, 36, 64, 99, 37
+  ];
+  
+const radialChartMargin = { top: 80, right: 80, bottom: 80, left: 80 };
+const radialChartWidth = 600 - radialChartMargin.left - radialChartMargin.right;
+const radialChartHeight = 650 - radialChartMargin.top - radialChartMargin.bottom;
+const radius = Math.min(radialChartWidth, radialChartHeight) / 2;
+const outerRadius = 1.5 * radius; 
+const innerRadius = 0.8 * outerRadius;
+
+// svg container for radial chart
+const radialChartSvg = d3.select('.radial-chart-container')
+    .append('svg')
+    .attr('width', radialChartWidth + radialChartMargin.left + radialChartMargin.right)
+    .attr('height', radialChartHeight + radialChartMargin.top + radialChartMargin.bottom)
+    .append('g')
+    .attr('transform', `translate(${radialChartWidth / 2 + radialChartMargin.left}, ${radialChartHeight / 2 + radialChartMargin.top})`);
+
+  // x scale
+const x = d3.scaleBand()
+    .range([0, 2 * Math.PI])
+    .align(0)
+    .domain(radialChartData.map((d, i) => i.toString()));
+  // y scale
+const y = d3.scaleRadial()
+    .range([innerRadius, outerRadius])
+    .domain([0, d3.max(radialChartData)]);
+
+// bars
+radialChartSvg.append('g')
+    .selectAll('path')
+    .data(radialChartData)
+    .enter()
+    .append('path')
+    .attr('fill', 'yellow')
+    .attr('stroke', '#FFA500') // glowing orange color
+    .attr('stroke-width', 5) 
+    .attr('filter', 'url(#glow)') 
+    .attr('d', d3.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(d => y(d))
+        .startAngle((d, i) => x(i.toString()))
+        .endAngle((d, i) => x(i.toString()) + x.bandwidth())
+        .padRadius(innerRadius)
+    )
+    // mouse hover effect
+    .on('mouseover', function () {
+        d3.select(this)
+            .transition()
+            .duration(200)
+            .ease(d3.easeLinear) 
+            .attr('fill', '#FFFFE0'); 
+    })
+    .on('mouseout', function () {
+        d3.select(this)
+            .transition()
+            .duration(200)
+            .ease(d3.easeLinear) 
+            .attr('fill', 'yellow');
+    });
+
+// void fill
+radialChartSvg.append('circle')
+    .attr('cx', 0)
+    .attr('cy', 0)
+    .attr('r', innerRadius)
+    .attr('fill', 'black');
+// glow effect
+const glowFilter = radialChartSvg.append('defs')
+    .append('filter')
+    .attr('id', 'glow')
+    .attr('x', '-50%')
+    .attr('y', '-50%')
+    .attr('width', '200%')
+    .attr('height', '200%');
+  
+glowFilter.append('feGaussianBlur')
+    .attr('in', 'SourceGraphic')
+    .attr('stdDeviation', 3) 
+    .attr('result', 'glow');
+
+
+
+
+
+
+
