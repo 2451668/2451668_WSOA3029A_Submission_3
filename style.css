@@ -27,7 +27,7 @@ main {
     background: linear-gradient(to bottom, #1a1a1a, #1a1a1a);
 }
 
-main h2, main p {
+main h2, h3, main p, ol {
     text-align: left;
     margin-left: 100px;
     margin-right: 100px;
@@ -63,6 +63,14 @@ main img {
 /* Styling for the header when scrolled */
 .header.scrolled {
     box-shadow: 0 0px 15px rgba(0, 0, 0, 0.048);
+}
+
+#blog h2 {
+    color: rgb(136, 178, 255);
+}
+
+#blog p {
+    color: rgb(233, 243, 255);
 }
 
 nav {
