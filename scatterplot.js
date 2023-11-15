@@ -1,148 +1,106 @@
-const data = [
-    { date: "July 1, 2008", location: "Nevada, United States", velocity: 9.8, energy: 3.6 },
-    { date: "April 19, 2018", location: "Indian Ocean", velocity: 10.9, energy: 51.2 },
-    { date: "August 2, 2020", location: "Indian Ocean", velocity: 11.1, energy: 7.4 },
-    { date: "September 20, 2018", location: "Indian Ocean", velocity: 11.1, energy: 8.3 },
-    { date: "June 26, 2014", location: "Indian Ocean", velocity: 11.2, energy: 6.1 },
-    { date: "October 21, 2008", location: "Northern Pacific Ocean", velocity: 11.3, energy: 4.6 },
-    { date: "April 22, 2019", location: "Southern Indian Ocean", velocity: 11.4, energy: 12.4 },
-    { date: "November 19, 2017", location: "Southern Pacific Ocean", velocity: 11.4, energy: 2.8 },
-    { date: "May 21, 2019", location: "Southern Indian Ocean", velocity: 11.5, energy: 65.6 },
-    { date: "May 3, 2018", location: "United Kingdom", velocity: 11.5, energy: 3.8 },
-    { date: "January 27, 2016", location: "Indian Ocean", velocity: 11.5, energy: 5.0 },
-    { date: "January 22, 2019", location: "United Arab Emirates", velocity: 11.6, energy: 3.6 },
-    { date: "May 25, 2011", location: "India", velocity: 11.6, energy: 228.0 },
-    { date: "January 9, 2008", location: "Southern Pacific Ocean", velocity: 11.6, energy: 4.1 },
-    { date: "September 18, 2020", location: "South Pacific Ocean", velocity: 11.7, energy: 4.1 },
-    { date: "March 3, 2016", location: "Indian Ocean", velocity: 11.7, energy: 5.8 },
-    { date: "October 10, 2015", location: "Indian Ocean", velocity: 11.8, energy: 3.6 },
-    { date: "December 8, 2013", location: "Southern Pacific Ocean", velocity: 11.8, energy: 6.4 },
-    { date: "March 12, 2012", location: "Pacific Ocean", velocity: 11.8, energy: 9.9 },
-    { date: "March 1, 2011", location: "Malaysia", velocity: 11.9, energy: 3.7 }
-];
+// . . . scatterplot
 
+const scatterMargin = { top: 80, right: 30, bottom: 80, left: 80 };
+const scatterWidth = 800 - scatterMargin.left - scatterMargin.right;
+const scatterHeight = 800 - scatterMargin.top - scatterMargin.bottom;
 
-// Scatterplot
-const margin = { top: 80, right: 30, bottom: 80, left: 80 };
-const width = 800 - margin.left - margin.right;
-const height = 800 - margin.top - margin.bottom; // Adjusted height
-
-// SVG container for html
-const svg = d3.select('.scatterplot-container')
+const scatterSvg = d3.select('.scatterplot-container')
     .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
+    .attr('width', scatterWidth + scatterMargin.left + scatterMargin.right)
+    .attr('height', scatterHeight + scatterMargin.top + scatterMargin.bottom)
     .append('g')
-    .attr('transform', `translate(${margin.left}, ${margin.top})`);
+    .attr('transform', `translate(${scatterMargin.left}, ${scatterMargin.top})`);
 
-const customMaxX = 12; // custom maximum for the x-axis
+const customMaxX = 12;
 const customMaxY = 250;
-// Scales
-const xScale = d3.scaleLinear()
-    .domain([9.5, customMaxX]) // custom maximum for the x-axis
-    .range([0, width]);
+// scales
+const scatterXScale = d3.scaleLinear()
+    .domain([9.5, customMaxX])
+    .range([0, scatterWidth]);
 
-const yScale = d3.scaleLinear()
-    .domain([0, customMaxY]) //  custom maximum for the y-axis
-    .range([height, 0]);
+const scatterYScale = d3.scaleLinear()
+    .domain([0, customMaxY])
+    .range([scatterHeight, 0]);
+
 
 
 const colorScale = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.energy)])
     .range(['steelblue', 'cyan']);
-const tooltip = d3.select(".tooltip");
-    // Gridlines for the x-axis
-function make_x_gridlines() {
-    return d3.axisBottom(xScale).ticks(5);
+// gridlines for the x-axis
+function make_scatter_x_gridlines() {
+    return d3.axisBottom(scatterXScale).ticks(5);
 }
 
-// Gridlines for the y-axis
-function make_y_gridlines() {
-    return d3.axisLeft(yScale).ticks(5);
+// gridlines for the y-axis
+function make_scatter_y_gridlines() {
+    return d3.axisLeft(scatterYScale).ticks(5);
 }
-
 // x gridlines 
-svg.append('g')
+scatterSvg.append('g')
     .attr('class', 'grid')
-    .attr('transform', `translate(0, ${height})`)
-    .call(make_x_gridlines()
-        .tickSize(-height)
+    .attr('transform', `translate(0, ${scatterHeight})`)
+    .call(make_scatter_x_gridlines()
+        .tickSize(-scatterHeight)
         .tickFormat(''));
 
 // y gridlines 
-svg.append('g')
+scatterSvg.append('g')
     .attr('class', 'grid')
-    .call(make_y_gridlines()
-        .tickSize(-width)
+    .call(make_scatter_y_gridlines()
+        .tickSize(-scatterWidth)
         .tickFormat(''));
 
 // Circles
-svg.selectAll('circle')
-    .data(data)
-    .enter()
-    .append('circle')
-    .attr('cx', d => xScale(d.velocity))
-    .attr('cy', d => yScale(0))
-    .attr('r', 6)
-    .attr('fill', 'steelblue')
-    .attr('opacity', 0.7)
-    .transition()
-    .duration(2000)
-    .delay((d, i) => i * 100)
-    .attr('cy', d => yScale(d.energy))
-    .attrTween('fill', function(d) {
-        const i = d3.interpolateRgb('steelblue', colorScale(d.energy));
-        return function(t) {
-            return i(t);
-        };
-    })
-    /*.on("mouseover", function(event, d) {
-        // Show tooltip on mouseover
-        const tooltip = d3.select('.tooltip');
-        tooltip.transition().duration(200).style('opacity', 0.9);
-        tooltip.html(`<strong>Date:</strong> ${d.date}<br>
-                      <strong>Location:</strong> ${d.location}<br>
-                      <strong>Energy:</strong> ${d.energy}<br>
-                      <strong>Velocity:</strong> ${d.velocity}`);
-        tooltip.style('left', (event.pageX) + 'px')
-               .style('top', (event.pageY - 28) + 'px');
-        d3.select(this).attr('fill', 'red'); // Change dot color on hover
-    })
-    .on("mouseout", function() {
-        // Hide  tooltip on mouseout
-        d3.select('.tooltip').transition().duration(500).style('opacity', 0);
-        d3.select(this).attr('fill', 'steelblue');
-    })*/;
+scatterSvg
+  .selectAll('circle')
+  .data(data)
+  .enter()
+  .append('circle')
+  .attr('cx', d => scatterXScale(d.velocity))
+  .attr('cy', d => scatterYScale(0))
+  .attr('r', 6)
+  .attr('fill', 'steelblue')
+  .attr('opacity', 0.7)
+  .transition()
+  .duration(2000)
+  .delay((d, i) => i * 100)
+  .attr('cy', d => scatterYScale(d.energy))
+  .attrTween('fill', function(d) {
+    const i = d3.interpolateRgb('steelblue', colorScale(d.energy));
+    return function(t) {
+      return i(t);
+    };
+  })
+;
+
+// axes
+const scatterXAxis = d3.axisBottom(scatterXScale);
+const scatterYAxis = d3.axisLeft(scatterYScale);
 
 
-// Axes
-const xAxis = d3.axisBottom(xScale);
-const yAxis = d3.axisLeft(yScale);
-
-svg.append('g')
+scatterSvg.append('g')
     .attr('class', 'x-axis')
-    .attr('transform', `translate(0, ${height})`)
-    .call(xAxis);
+    .attr('transform', `translate(0, ${scatterHeight})`)
+    .call(scatterXAxis);
 
-svg.append('g')
+scatterSvg.append('g')
     .attr('class', 'y-axis') 
-    .call(yAxis);
-//Global font
+    .call(scatterYAxis);
 
-
-// Axis labels
-svg.append('text')
+// axis labels
+scatterSvg.append('text')
     .attr('class', 'x-axis-label')
-    .attr('x', width / 2)
-    .attr('y', height + margin.top -20)
+    .attr('x', scatterWidth / 2)
+    .attr('y', scatterHeight + scatterMargin.top -20)
     .style('font-family', 'Poppins, sans-serif')
     .style('font-weight', 'bold')
     .text('Velocity');
 
-svg.append('text')
+scatterSvg.append('text')
     .attr('class', 'y-axis-label')
     .attr('transform', 'rotate(-90)')
-    .attr('x', -height / 2)
+    .attr('x', -scatterHeight / 2)
     .attr('y', -60)
     .attr('dy', '1em')
     .style('font-family', 'Poppins, sans-serif')
@@ -150,10 +108,181 @@ svg.append('text')
     .style('text-anchor', 'middle')
     .text('Energy');
 
-svg.append('text')
-    .attr('x', width / 3)
+scatterSvg.append('text')
+    .attr('x', scatterWidth / 3)
     .attr('y', -40)
     .style('font-family', 'Poppins, sans-serif')
     .style('font-weight', 'bold')
     .style('font-size', '20px')
     .text('Fireball Velocity vs Energy');
+
+
+// . . . bar plot
+
+// dimensions and margins
+const chartMargin = { top: 50, right: 5, bottom: 100, left: 50 };
+const chartWidth = 800 - chartMargin.left - chartMargin.right;
+const chartHeight = 500 - chartMargin.top - chartMargin.bottom;
+const barChartSvg = d3.select('.bar-chart-container')
+    .append('svg')
+    .attr('width', chartWidth + chartMargin.left + chartMargin.right)
+    .attr('height', chartHeight + chartMargin.top + chartMargin.bottom)
+    .append('g')
+    .attr('transform', `translate(${chartMargin.left}, ${chartMargin.top})`);
+
+// count the no. at each location
+const locationFrequency = {};
+data.forEach(entry => {
+    const location = entry.location;
+    locationFrequency[location] = (locationFrequency[location] || 0) + 1;
+});
+
+const frequencyData = Object.entries(locationFrequency).map(([location, frequency]) => ({
+    location,
+    frequency
+}));
+
+// scales
+const barXScale = d3.scaleBand()
+    .domain(frequencyData.map(d => d.location))
+    .range([0, chartWidth])
+    .padding(0.1);
+
+const barYScale = d3.scaleLinear()
+    .domain([0, d3.max(frequencyData, d => d.frequency)])
+    .range([chartHeight, 0]);
+
+// draws bars
+barChartSvg.selectAll('.bar')
+    .data(frequencyData)
+    .enter().append('rect')
+    .attr('class', 'bar')
+    .attr('x', d => barXScale(d.location))
+    .attr('y', d => barYScale(d.frequency))
+    .attr('width', barXScale.bandwidth())
+    .attr('height', d => chartHeight - barYScale(d.frequency))
+    .attr('fill', 'steelblue')
+    .attr('rx', 5) 
+    .attr('ry', 5); 
+
+// function to create axes and labels
+function createFrequencyBarChartAxes() {
+    const xAxis = d3.axisBottom(barXScale);
+    const yAxis = d3.axisLeft(barYScale).ticks(5);
+
+    barChartSvg.append('g')
+        .attr('class', 'x-axis')
+        .attr('transform', `translate(0, ${chartHeight})`)
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", "-.15em")
+        .attr("transform", "rotate(-45)");
+
+    barChartSvg.append('g')
+        .attr('class', 'y-axis')
+        .call(yAxis);
+
+    /*barChartSvg.append('text')
+        .attr('class', 'x-axis-label')
+        .attr('x', chartWidth / 2)
+        .attr('y', chartHeight + chartMargin.top + 20)
+        .style('text-anchor', 'middle')
+        .text('Location');*/
+
+    barChartSvg.append('text')
+        .attr('class', 'y-axis-label')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -chartHeight / 2)
+        .attr('y', -chartMargin.left + 10)
+        .attr('dy', '1em')
+        .style('text-anchor', 'middle')
+        .text('Frequency');
+}
+
+// creates axes and labels
+createFrequencyBarChartAxes();
+
+// title
+barChartSvg.append('text')
+    .attr('x', chartWidth / 3)
+    .attr('y', -10)
+    .style('font-weight', 'bold')
+    .style('font-size', '20px')
+    .text('Fireball Frequency in Different Locations');
+
+
+// . . . line plot
+
+const lineMargin = { top: 80, right: 30, bottom: 80, left: 80 };
+const lineWidth = 800 - lineMargin.left - lineMargin.right;
+const lineHeight = 400 - lineMargin.top - lineMargin.bottom;
+const lineSvg = d3.select('.line-chart-container')
+    .append('svg')
+    .attr('width', lineWidth + lineMargin.left + lineMargin.right)
+    .attr('height', lineHeight + lineMargin.top + lineMargin.bottom)
+    .append('g')
+    .attr('transform', `translate(${lineMargin.left}, ${lineMargin.top})`);
+
+// scales for line chart
+const lineXScale = d3.scaleLinear()
+    .domain([d3.min(data, d => d.velocity), d3.max(data, d => d.velocity)])
+    .range([0, lineWidth]);
+
+const lineYScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.energy)])
+    .range([lineHeight, 0]);
+
+//x and y axes
+const lineXAxis = d3.axisBottom(lineXScale);
+const lineYAxis = d3.axisLeft(lineYScale);
+
+// line connecting points
+lineSvg.append('path')
+    .datum(data)
+    .attr('fill', 'none')
+    .attr('stroke', 'steelblue')
+    .attr('stroke-width', 2)
+    .attr('d', d3.line()
+        .x(d => lineXScale(d.velocity))
+        .y(d => lineYScale(d.energy))
+    );
+
+// axes and labels 
+lineSvg.append('g')
+  .attr('class', 'x-axis')
+  .attr('transform', `translate(0, ${lineHeight})`)
+  .call(lineXAxis);
+
+lineSvg.append('g')
+  .attr('class', 'y-axis') 
+  .call(lineYAxis);
+
+// axis labels
+lineSvg.append('text')
+  .attr('class', 'x-axis-label')
+  .attr('x', lineWidth / 2)
+  .attr('y', lineHeight + lineMargin.top - 20)
+  .style('font-family', 'Poppins, sans-serif')
+  .style('font-weight', 'bold')
+  .text('Velocity');
+
+lineSvg.append('text')
+  .attr('class', 'y-axis-label')
+  .attr('transform', 'rotate(-90)')
+  .attr('x', -lineHeight / 2)
+  .attr('y', -60)
+  .attr('dy', '1em')
+  .style('font-family', 'Poppins, sans-serif')
+  .style('font-weight', 'bold')
+  .style('text-anchor', 'middle')
+  .text('Energy');
+
+lineSvg.append('text')
+  .attr('x', lineWidth / 3)
+  .attr('y', -40)
+  .style('font-family', 'Poppins, sans-serif')
+  .style('font-weight', 'bold')
+  .style('font-size', '20px')
+  .text('Fireball Velocity vs Energy');

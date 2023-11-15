@@ -81,7 +81,7 @@ nav li {
 }
 
 nav a {
-    color: #ffffff;
+    color: rgb(92, 92, 92);
     text-decoration: none;
     padding: 0 10px;
     font-size: 17px;
@@ -92,7 +92,7 @@ nav a {
 
 /* Hover animation for the links */
 nav a:hover {
-    color: hsl(212, 100%, 68%); /
+    color: hsl(0, 0%, 100%)
 }
 
 /* Section styling */
@@ -124,31 +124,65 @@ footer {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
-.scatterplotart-container {
-    width: 78%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
 /* Tooltip container */
 .tooltip {
+    display: block;
     position: absolute;
-    background-color: #fff;
-    border: 1px solid #aaa;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
-/* Styling for different sections of the tooltip */
-.tooltip .date,
-.tooltip .location,
-.tooltip .energy,
-.tooltip .velocity {
-    font-weight: bold;
-    margin-bottom: 5px;
+.tooltip-content {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Bar chart styling */
+.bar-chart-container {
+    width: 78%;
+    margin: 20px auto; 
+    padding: 20px;
+    position: relative;
+    background-color: #c1c6c9;
+    background-size: 200% 200%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.bar {
+    fill: rgb(25, 25, 43);
+    border-top-left-radius: 35px;
+    border-top-right-radius: 15px;
+    transition: fill 0.3s ease;
+    width: 5%;
+    margin: 0 auto;
+}
+
+.bar:hover {
+    fill: rgb(35, 46, 71);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+/* line plot styling*/
+.line-chart-container {
+    width: 78%;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    background-color: #c1c6c9;    
+    background-size: 200% 200%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2;
 }
