@@ -342,17 +342,29 @@ heatmapSvg.selectAll('rect.block')
     .attr('width', blockWidth)
     .attr('height', blockHeight)
     .attr('fill', d => heatmapColorScale(d))
-    .attr('rx', 10) 
-    .attr('ry', 10) 
+    .attr('rx', 10)
+    .attr('ry', 10)
+    .attr('filter', 'url(#heatmapGlow)') // Apply the glow filter
     .on('mouseover', function () {
-        // make block slightly lighter on hover
-        const currentColor = d3.select(this).attr('fill');
-        const lighterColor = d3.color(currentColor).brighter(0.2).toString();
-        d3.select(this).attr('fill', lighterColor);
+        // make block slightly lighter on hover with eased transition
+        d3.select(this).transition().duration(300).ease(d3.easeCubicInOut)
+            .attr('fill', d3.color(heatmapColorScale(d3.select(this).data()[0])).brighter(1).toString());
     })
     .on('mouseout', function (event, d) {
-        // restore
-        d3.select(this).attr('fill', heatmapColorScale(d));
+        // restore with eased transition
+        d3.select(this).transition().duration(300).ease(d3.easeCubicInOut)
+            .attr('fill', heatmapColorScale(d));
+    })
+    .on('click', function () {
+        // add a tiny wiggle on click
+        d3.select(this).transition().duration(50)
+            .attr('transform', 'translate(3,0)')
+            .transition().duration(50)
+            .attr('transform', 'translate(-3,0)')
+            .transition().duration(50)
+            .attr('transform', 'translate(3,0)')
+            .transition().duration(50)
+            .attr('transform', 'translate(0,0)');
     });
 
 
